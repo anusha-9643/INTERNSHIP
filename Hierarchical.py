@@ -1,38 +1,50 @@
 class BankAccount:
-    def __init__(self,account_holder, balance):
+    def __init__(self,account_holder):
         self.account_holder = account_holder
-        self.balance = balance
+        self.balance = 0
 
     def deposit(self,amount):
         self.balance += amount
-        print("Deposited:", self.amount)
     
     def withdraw(self,amount):
-        if amount < self.balance:
-            self.amount -= amount
-            print("withdrawn:", self.amount)
+        if self.balance >= amount:
+            self.balance -= amount
+            self.display_balance()
+
         else:
             print("insufficient balance")
 
     def display_balance(self):
-        print("Balance:", self.amount)
+        print("Balance:", self.balance)
 
 class SavingsAccount(BankAccount):
-    def __init__(self,account_holder,balance,interest_rate,):
-        super().__init__(account_holder, balance)
-        self.interest_rate = interest_rate
+    def __init__(self,interest_rate,name):
+        temp_interest = interest_rate / 100
+        self.interest_rate = interest_rate 
+        super().__init__(name)
 
     def add_interest(self):
-        interest = self.balance * self.interest_rate / 100
-        self.balance += interest
-        print("interested add:", interest)
-        print("New balance:", self.balance)
-
-
+        self.balance *= (1 + self.interest_rate)
+        super().display_balance()
+    
 class CurrentAccount(BankAccount):
-    def __init__(self,overdraft_limit, account_holder, balance):
-        super().__init__(account_holder, balance)
-        self.overdraft_limit = overdraft_limit
-
+    def __init__(self,overdraft_limit, name):
+        self.overdraft_limit=overdraft_limit
+        super().__init__(name)
     def withdraw_with_overdraft(self,amount):
+        if amount<self.balance+self.overdraft_limit:  # 590 < 600
+            self.balance-=amount
+            super().display_balance()
+        else:
+            print("Overdraft limit is exceeded")
 
+
+SA = SavingsAccount(10,"Anu")
+CA = CurrentAccount(100, "Anu")
+
+# SA.deposit(100)
+# SA.withdraw(30)
+# SA.add_interest()
+
+CA.deposit(500)
+CA.withdraw_with_overdraft(590)
