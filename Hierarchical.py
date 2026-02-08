@@ -20,7 +20,7 @@ class BankAccount:
 class SavingsAccount(BankAccount):
     def __init__(self,interest_rate,name):
         temp_interest = interest_rate / 100
-        self.interest_rate = interest_rate 
+        self.interest_rate = temp_interest
         super().__init__(name)
 
     def add_interest(self):

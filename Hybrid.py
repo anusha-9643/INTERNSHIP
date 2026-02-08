@@ -5,7 +5,6 @@ class Person:
     def display_person(self):
         print("Person:", self.name)
 
-
 class Student(Person):
     def __init__(self, name, student_id) :
         Person.__init__(self,name)
